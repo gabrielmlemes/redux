@@ -51,13 +51,14 @@ export const userSlice = createSlice({
         ...state,
         user: {
           ...state.user,
-          address: null
+          address: null,
         },
       };
     },
   },
 });
 
-export const { createUser, logoutUser, addAddress, deleteAddress } = userSlice.actions;
+export const { createUser, logoutUser, addAddress, deleteAddress } =
+  userSlice.actions;
 
 export default userSlice.reducer;
