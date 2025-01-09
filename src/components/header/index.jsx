@@ -1,9 +1,13 @@
 import styles from './header.module.css'
 import { Link, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux';
+import { logoutUser } from '../../redux/user/slice';
 
 export function Header(){
+  const dispatch = useDispatch()
+  const {user} = useSelector((rootReducer)=> rootReducer.user)
+
   const navigate = useNavigate();
-  const user = null;
 
   function handleLogin(){
     navigate("/")
@@ -12,6 +16,8 @@ export function Header(){
   function handleLogout(){
     dispatch(logoutUser())
     navigate("/")
+    console.log(user);
+    
   }
 
   return(
