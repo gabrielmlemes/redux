@@ -3,7 +3,7 @@ import styles from "./address.module.css";
 import { Header } from "../../components/header";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { createUser } from "../../redux/user/slice";
+import { addAddress } from "../../redux/user/slice";
 
 export function Address() {
   const { user } = useSelector((rootReducer) => rootReducer.user);
@@ -14,15 +14,14 @@ export function Address() {
   const [addressNumber, setAddressNumber] = useState("");
 
   function handleRegisterAddress() {
-    console.log(addressName + addressNumber);
-    
-    
-    // dispatch(
-    //   createUser({
-    //     address: addressName,
-    //   })
-    // );
-    // navigate("/painel");
+
+    dispatch(
+      addAddress({
+        addressName,
+        addressNumber,
+      })
+    );
+    navigate("/painel");
   }
 
   return (

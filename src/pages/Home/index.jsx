@@ -1,14 +1,18 @@
 import styles from "./home.module.css";
 import { Header } from "../../components/header";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteAddress } from "../../redux/user/slice";
 
 export function Home() {
+  const dispatch = useDispatch()
   const { user } = useSelector((rootReducer) => rootReducer.user);
   console.log(user);
 
   function handleDeleteAddress() {
-    alert("Endereço deletado com sucesso!");
+    dispatch(deleteAddress({
+      address: null
+    }))
   }
 
   return (
@@ -39,7 +43,7 @@ export function Home() {
               <>
                 <strong className={styles.addressLabel}>Endereço atual:</strong>
                 <div className={styles.address}>
-                  <p>{user.address.location}, nº {user.address.number}</p>
+                  <p>{user.address.addressName}, nº {user.address.addressNumber}</p>
 
                   <button onClick={handleDeleteAddress}>
                     Deletar endereço
