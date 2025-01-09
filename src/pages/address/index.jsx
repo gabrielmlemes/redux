@@ -14,12 +14,15 @@ export function Address() {
   const [addressNumber, setAddressNumber] = useState("");
 
   function handleRegisterAddress() {
-    dispatch(
-      createUser({
-        address: addressName,
-      })
-    );
-    navigate("/painel");
+    console.log(addressName + addressNumber);
+    
+    
+    // dispatch(
+    //   createUser({
+    //     address: addressName,
+    //   })
+    // );
+    // navigate("/painel");
   }
 
   return (
