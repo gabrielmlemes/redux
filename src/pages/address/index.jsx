@@ -10,11 +10,10 @@ export function Address() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [addressName, setAddressName] = useState("");
-  const [addressNumber, setAddressNumber] = useState("");
+  const [addressName, setAddressName] = useState(user?.address?.addressName ?? "");
+  const [addressNumber, setAddressNumber] = useState(user?.address?.addressNumber ?? "");
 
   function handleRegisterAddress() {
-
     dispatch(
       addAddress({
         addressName,

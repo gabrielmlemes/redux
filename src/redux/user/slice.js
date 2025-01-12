@@ -1,13 +1,19 @@
+// No slice, eu tenho o estado inicial que pode ser alterado através das actions e eu posso consumi-lo em outros componentes
+
 import { createSlice } from "@reduxjs/toolkit";
 
+// estado inicial:
 const initialState = {
   user: null,
+  users: [],
+  loading: false,
 };
 
 export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
+    //  Os reducers são funções que atualizam o estado com base na ação enviada.
     createUser: (state, action) => {
       return {
         ...state,
@@ -35,6 +41,13 @@ export const userSlice = createSlice({
         };
       }
 
+      if (state.user === null) {
+        alert("Você deve estar logado para poder adicionar um endereço!");
+        return {
+          ...state,
+        };
+      }
+
       return {
         ...state,
         user: {
@@ -55,10 +68,28 @@ export const userSlice = createSlice({
         },
       };
     },
+    fetchUsers: (state) => {
+      state.loading = true
+    },
+    fetchUsersSuccess: (state, action) => {
+      state.users = action.payload;
+      state.loading = false
+    },
+    fetchUsersFailure: (state, action) => {
+      console.log("error: ", action.payload);
+      state.loading = false
+    },
   },
 });
 
-export const { createUser, logoutUser, addAddress, deleteAddress } =
-  userSlice.actions;
+export const {
+  createUser,
+  logoutUser,
+  addAddress,
+  deleteAddress,
+  fetchUsers,
+  fetchUsersSuccess,
+  fetchUsersFailure,
+} = userSlice.actions;
 
 export default userSlice.reducer;
