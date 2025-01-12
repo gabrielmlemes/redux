@@ -7,6 +7,7 @@ const initialState = {
   user: null,
   users: [],
   loading: false,
+  userId: {}
 };
 
 export const userSlice = createSlice({
@@ -69,15 +70,21 @@ export const userSlice = createSlice({
       };
     },
     fetchUsers: (state) => {
-      state.loading = true
+      state.loading = true;
     },
     fetchUsersSuccess: (state, action) => {
       state.users = action.payload;
-      state.loading = false
+      state.loading = false;
     },
     fetchUsersFailure: (state, action) => {
       console.log("error: ", action.payload);
-      state.loading = false
+      state.loading = false;
+    },
+    fetchUserById: (state, action)=> {
+      console.log("id do usuário: " + action.payload);
+    },
+    fetchUserByIdSuccess: (state, action) => {
+      state.userId = action.payload
     },
   },
 });
@@ -90,6 +97,8 @@ export const {
   fetchUsers,
   fetchUsersSuccess,
   fetchUsersFailure,
+  fetchUserById,
+  fetchUserByIdSuccess
 } = userSlice.actions;
 
 export default userSlice.reducer;

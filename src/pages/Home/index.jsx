@@ -2,12 +2,21 @@ import styles from "./home.module.css";
 import { Header } from "../../components/header";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteAddress, fetchUsers } from "../../redux/user/slice";
+import {
+  deleteAddress,
+  fetchUsers,
+  fetchUserById,
+} from "../../redux/user/slice";
+import { useState } from "react";
 
 export function Home() {
+  const [id, setId] = useState("");
+
   const dispatch = useDispatch();
-  const { user, users, loading } = useSelector((rootReducer) => rootReducer.user);
-  console.log(user);
+
+  const { user, users, loading, userId } = useSelector(
+    (rootReducer) => rootReducer.user
+  );
 
   function handleDeleteAddress() {
     dispatch(
@@ -19,6 +28,9 @@ export function Home() {
 
   async function handleFetchUsers() {
     dispatch(fetchUsers());
+  }
+  async function handleSearchUser(id) {
+    dispatch(fetchUserById(id));
   }
 
   return (
@@ -67,15 +79,30 @@ export function Home() {
             <button onClick={handleFetchUsers}>Buscar usuários</button>
             <br />
 
-            {loading && (
-              <p>Carregando...</p>
-            )}
+            {loading && <p>Carregando...</p>}
 
-            {!loading && users.map((user) => (
-              <div key={user.id}>
-                <strong>Nome: {user.name}</strong>
+            {!loading &&
+              users.map((user) => (
+                <div key={user.id}>
+                  <strong>Nome: {user.name}</strong>
+                </div>
+              ))}
+
+            <hr />
+
+            <input
+              type="text"
+              value={id}
+              onChange={(e) => setId(e.target.value)}
+              placeholder="Digite aqui um id para buscar um usuário"
+            />
+            <button onClick={() => handleSearchUser(id)}>Buscar usuário</button>
+
+            {userId?.id && (
+              <div>
+                <strong>Nome: {userId.name}</strong>
               </div>
-            ))}
+            )}
           </div>
         </main>
       </div>
